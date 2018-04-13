@@ -5,7 +5,10 @@ import logger from 'morgan';
 const app = express();
 const port = 2121;
 
-app.use(logger('dev'));
+if (app.get('env') !== 'test') {
+  app.use(logger('dev'));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

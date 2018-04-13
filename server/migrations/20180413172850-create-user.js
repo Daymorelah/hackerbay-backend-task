@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
     id: {
       allowNull: false,
@@ -9,12 +9,17 @@ export default {
     },
     username: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     email: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     createdAt: {
       allowNull: false,

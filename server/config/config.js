@@ -1,8 +1,8 @@
-export default {
+module.exports = {
   development: {
     username: 'postgres',
     password: 'andelabootcamp24',
-    database: 'bakend-task',
+    database: 'backend-task',
     host: '127.0.0.1',
     dialect: 'postgres',
     logging: false,
