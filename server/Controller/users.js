@@ -4,7 +4,7 @@ import models from '../models';
 
 dotenv.config();
 
-const userModel = models.Users;
+const userModel = models.User;
 const secrete = process.env.SECRETE;
 
 export default {

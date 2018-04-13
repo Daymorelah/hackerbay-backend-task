@@ -64,8 +64,11 @@ export default (sequelize, DataTypes) => {
       },
     },
   ); // end of define method
-  User.associate = () => {
-
+  User.associate = () => {};
+  User.prototype.verifyPassword = (bodyPassword, basePassword) => {
+    let decrypted = decipher.update(basePassword, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted === bodyPassword;
   };
   return User;
 };
