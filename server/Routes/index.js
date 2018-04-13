@@ -1,14 +1,15 @@
 import Controllers from '../Controller';
-// import auth from '../Middleware/jwt';
+import auth from '../Middleware/jwt';
 
 const userController = Controllers.Users;
 
 const routes = (app) => {
   app.get('/api/v1/', (req, res) => {
-    res.status(200).send({ message: 'Welcome to the backend test' });
+    res.status(200).send({ message: 'Welcome to the backend task' });
   });
   app.post('/api/v1/signup', userController.signUp);
   app.post('/api/v1/signin', userController.signIn);
+  app.get('/api/v1/users/list', auth.checkToken, userController.list);
 };
 
 export default routes;

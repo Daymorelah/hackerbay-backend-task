@@ -68,4 +68,9 @@ export default {
       res.status(400).send({ message: 'Incomplete login details' });
     }
   },
+  list(req, res) {
+    return userModel.all({ attributes: ['username', 'email'] })
+      .then(users => res.status(200).send(users))
+      .catch(error => res.status(401).send(error.message));
+  },
 };
