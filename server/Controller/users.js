@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import jwt from 'jsonwebtoken';
 import jsonPatch from 'json-patch';
-import imageDownloader from 'image-downloader';
+import jimp from 'jimp';
 import models from '../models';
 
 dotenv.config();
@@ -91,14 +91,15 @@ export default {
   },
   createThumbnail(req, res) {
     const { imageUrl } = req.body;
-    const options = {
-      url: imageUrl,
-      dest: path.resolve(__dirname, 'server', 'image'),
-      timeout: 4000,
-    };
-    imageDownloader.image(options)
-      .then(({ filename, image}) => {
-
-      }).catch( error => res.status(401).send(error.message));
+    jimp.read(imageUrl)
+      .then((image) => {
+        image.resize(50, 50).write(path.resolve(__dirname, '../image', `newImage.${image.getExtension()}`), (error, resizedImage) => {
+          if (error) {
+            res.status(401).send(error.message);
+          } else if (resizedImage) {
+            res.status(200).send({ message: 'Picture resized succesfully', resizedImage });
+          }
+        });
+      }).catch(error => res.status(401).send(error.message));
   },
 };
