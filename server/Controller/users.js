@@ -97,7 +97,7 @@ export default {
           if (error) {
             res.status(401).send(error.message);
           } else if (resizedImage) {
-            res.status(200).send({ message: 'Picture resized succesfully', resizedImage });
+            res.status(200).send({ message: 'Image resized succesfully', resizedImage });
           }
         });
       }).catch(error => res.status(401).send(error.message));
