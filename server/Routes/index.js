@@ -10,6 +10,8 @@ const routes = (app) => {
   app.post('/api/v1/signup', userController.signUp);
   app.post('/api/v1/signin', userController.signIn);
   app.get('/api/v1/users/list', auth.checkToken, userController.list);
+  app.patch('/api/v1/update', auth.checkToken, userController.applyPatch);
+  app.post('/api/v1/resizeImage', auth.checkToken, userController.createThumbnail);
 };
 
 export default routes;

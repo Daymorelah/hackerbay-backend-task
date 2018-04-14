@@ -51,6 +51,7 @@ export default (sequelize, DataTypes) => {
         beforeCreate(user) {
           let encrypted = cipher.update(user.password, 'utf8', 'hex');
           encrypted += cipher.final('hex');
+          /* eslint-disable no-param-reassign */
           user.password = encrypted;
         },
         beforeUpdate(user) {
