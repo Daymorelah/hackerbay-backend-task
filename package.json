@@ -4,8 +4,11 @@
   "description": "A simple backend task for the hakerbay interview",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& mocha --compilers js:babel-register server/Tests/Controllers/usersTests.js",
-    "start": "nodemon server/app.js --exec babel-node"
+    "test": "set NODE_ENV=test&& mocha --require babel-register server/Tests/Controllers/usersTests.js --exit",
+    "start": "nodemon server/app.js --exec babel-node",
+    "test_coverage": "set NODE_ENV=test&& npm run pre_test && babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- server/Tests/Controllers/usersTests.js --exit",
+    "test_and_coverage": "npm run test && npm run test_coverage",
+    "pre_test": "set NODE_ENV=test&& sequelize db:migrate:undo:all && sequelize db:migrate"
   },
   "keywords": [
     "node.js",
@@ -39,12 +42,14 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "coveralls": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "mocha": "^5.1.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "nyc": "^11.6.0"
   }
 }

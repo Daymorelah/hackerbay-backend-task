@@ -13,38 +13,36 @@ const secrete = process.env.SECRETE;
 export default {
   signUp(req, res) {
     if (req.body.username && req.body.password && req.body.email) {
-      userModel.findOne({ where: { username: req.body.username } })
+      return userModel.findOne({ where: { username: req.body.username } })
         .then((existingUser) => {
           if (existingUser) {
-            res.status(200).send({ message: 'Username already exist' });
-          } else {
-            userModel.create({
-              username: req.body.username,
-              password: req.body.password,
-              email: req.body.email,
-            })
-              .then((newUser) => {
-                const token = jwt.sign(
-                  {
-                    userId: newUser.id,
-                    username: newUser.username,
-                    email: newUser.email,
-                  },
-                  secrete,
-                  { expiresIn: '10h' },
-                );
-                res.status(201).send({
-                  token,
-                  message: `user ${newUser.username} has been created`,
-                });
-              })
-              .catch(error => res.status(400).send({ message: error.message }));
+            return res.status(400).send({ message: 'Username already exist' });
           }
+          return userModel.create({
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+          })
+            .then((newUser) => {
+              const token = jwt.sign(
+                {
+                  userId: newUser.id,
+                  username: newUser.username,
+                  email: newUser.email,
+                },
+                secrete,
+                { expiresIn: '10h' },
+              );
+              res.status(201).send({
+                token,
+                message: `user ${newUser.username} has been created`,
+              });
+            })
+            .catch(error => res.status(400).send({ message: error.message }));
         })
         .catch(error => res.status(400).send({ message: error.message }));
-    } else {
-      res.status(400).send({ message: 'Incomplete registration details' });
     }
+    return res.status(400).send({ message: 'Incomplete registration details' });
   },
   signIn(req, res) {
     if (req.body.username && req.body.password) {
@@ -66,7 +64,7 @@ export default {
             });
           }
         })
-        .catch(error => res.status(400).send({ message: error.message }));
+        .catch(error => res.status(400).send({ messages: error.message }));
     } else {
       res.status(400).send({ message: 'Incomplete login details' });
     }
