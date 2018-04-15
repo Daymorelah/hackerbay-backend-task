@@ -4,12 +4,12 @@
   "description": "A simple backend task for the hakerbay interview",
   "main": "index.js",
   "scripts": {
-    "test_coverage": "set NODE_ENV=test&& npm run run_migrations && npm run run_seeders && babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- server/Tests/Controllers/usersTests.js --exit",
+    "test_coverage": "set NODE_ENV=test&& npm run run_migrations && npm run run_seeders && babel-node ./node_modules/babel-istanbul/lib/cli.js cover -x /server/models/index.js ./node_modules/mocha/bin/_mocha -- server/Tests/Controllers/usersTests.js --exit",
     "test_and_coverage": "npm run test && npm run test_coverage",
     "run_migrations": "set NODE_ENV=test&& sequelize db:migrate:undo:all && sequelize db:migrate",
-    "run_seeders":"set NODE_ENV=test&& sequelize db:seed:undo:all && sequelize db:seed:all",
+    "run_seeders": "set NODE_ENV=test&& sequelize db:seed:undo:all && sequelize db:seed:all",
     "run_test": "set NODE_ENV=test&& mocha --require babel-register server/Tests/Controllers/usersTests.js --exit",
-    "test":"npm run run_migrations && npm run run_seeders && npm run run_test",
+    "test": "npm run run_migrations && npm run run_seeders && npm run run_test",
     "start": "nodemon server/app.js --exec babel-node"
   },
   "keywords": [

@@ -1,11 +1,5 @@
-import User from '../../models';
-
-const usermodel = User.User;
 
 module.exports = {
-  clearUSerdb() {
-    usermodel.destroy({ truncate: true });
-  },
   userDetails: {
     username: 'John Doe',
     password: 'johndoe',
@@ -47,11 +41,16 @@ module.exports = {
     password: 'doejohn',
   },
   /* eslint-disable quote-props,quotes,comma-dangle,key-spacing,object-curly-spacing */
-  jsonObject: {"car":"Honda"},
-  jsonPatchObject:
-    [{"op":"add", "path":"/phone", "value":"sony"}],
-  invalidJsonPatchObject:
-    [{ "ops": "add", "path": "/phone", "value": "sony" }],
-  failTestOperation:
-      [{ "op": "test", "path": "/car", "value": "Toyota" }],
+  jsonObject: {
+    "car":"Honda"
+  },
+  jsonPatchObject:[
+    {"op":"add", "path":"/phone", "value":"sony"}
+  ],
+  invalidJsonPatchObject:[
+    { "ops": "add", "path": "/phone", "value": "sony" }
+  ],
+  failTestOperation:[
+    { "op": "test", "path": "/car", "value": "Toyota" }
+  ],
 };

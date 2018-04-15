@@ -1,12 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies, no-undef */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import path from 'path';
 import app from '../../app';
 import * as helper from '../Helper';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 let token = '';
+const picture = path.resolve(__dirname, '../Helper/pic1.jpg');
 
 describe('Tests for back-end task', () => {
   describe('Integration test for back-end task', () => {
@@ -19,7 +21,7 @@ describe('Tests for back-end task', () => {
           done();
         });
     });
-    it.only('should create a user in the database', (done) => {
+    it('should create a user in the database', (done) => {
       chai.request(app)
         .post('/api/v1/signup')
         .send(helper.userDetails)
@@ -207,7 +209,7 @@ describe('Tests for back-end task', () => {
           done();
         });
     });
-    it.only('should return an updated json after patching the previous one', (done) => {
+    it('should return an updated json after patching the previous one', (done) => {
       chai.request(app)
         .patch('/api/v1/update')
         .set('x-access-token', token)
@@ -223,7 +225,7 @@ describe('Tests for back-end task', () => {
           done();
         });
     });
-    it.only('should return an error type an error message if patch option is invalid', (done) => {
+    it('should return an error type an error message if patch option is invalid', (done) => {
       chai.request(app)
         .patch('/api/v1/update')
         .set('x-access-token', token)
@@ -240,7 +242,7 @@ describe('Tests for back-end task', () => {
           done();
         });
     });
-    it.only('should return a test-failed message if a test patch operation fails', (done) => {
+    it('should return a test-failed message if a test patch operation fails', (done) => {
       chai.request(app)
         .patch('/api/v1/update')
         .set('x-access-token', token)
@@ -252,6 +254,37 @@ describe('Tests for back-end task', () => {
           expect(res.status).to.equal(400);
           expect(res.body).to.have.property('Message');
           expect(res.body.Message).to.equal('Patch test failed');
+          done();
+        });
+    });
+  });
+  describe('Integration test for thumbnail feature', () => {
+    it('should resize an image to size 50x50', (done) => {
+      chai.request(app)
+        .post('/api/v1/resizeImage')
+        .set('x-access-token', token)
+        .send({ imageUrl: picture })
+        .end((error, res) => {
+          if (error) {
+            throw (error);
+          }
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('Image resized succesfully');
+          done();
+        });
+    });
+    it('should return an error if input is not an image', (done) => {
+      chai.request(app)
+        .post('/api/v1/resizeImage')
+        .set('x-access-token', token)
+        .send({ imageUrl: 'picture' })
+        .end((error, res) => {
+          if (error) {
+            throw (error);
+          }
+          expect(res.status).to.equal(401);
+          expect(res.body).to.have.property('message');
           done();
         });
     });

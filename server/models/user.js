@@ -63,12 +63,6 @@ export default (sequelize, DataTypes) => {
           /* eslint-disable no-param-reassign */
           user.password = encrypt(user.password);
         },
-        beforeUpdate(user) {
-          if (user.password) {
-            user.password = encrypt(user.password);
-            user.updateAt = Date.now();
-          }
-        },
       },
     },
   ); // end of define method
