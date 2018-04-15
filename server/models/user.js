@@ -1,7 +1,18 @@
 import crypto from 'crypto';
 
-const cipher = crypto.createCipher('aes192', 'my secrete');
-const decipher = crypto.createDecipher('aes192', 'my secrete');
+function encrypt(text) {
+  const cipher = crypto.createCipher('aes192', 'my secrete');
+  let crypted = cipher.update(text, 'utf8', 'hex');
+  crypted += cipher.final('hex');
+  return crypted;
+}
+function decrypt(text) {
+  const decipher = crypto.createDecipher('aes192', 'my secrete');
+  let decrypted = decipher.update(text, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
+
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -20,7 +31,7 @@ export default (sequelize, DataTypes) => {
         },
       },
       password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1234),
         allowNull: false,
         validate: {
           notEmpty: {
@@ -49,16 +60,12 @@ export default (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate(user) {
-          let encrypted = cipher.update(user.password, 'utf8', 'hex');
-          encrypted += cipher.final('hex');
           /* eslint-disable no-param-reassign */
-          user.password = encrypted;
+          user.password = encrypt(user.password);
         },
         beforeUpdate(user) {
           if (user.password) {
-            let encrypted = cipher.update(user.password, 'utf8', 'hex');
-            encrypted += cipher.final('hex');
-            user.password = encrypted;
+            user.password = encrypt(user.password);
             user.updateAt = Date.now();
           }
         },
@@ -66,9 +73,8 @@ export default (sequelize, DataTypes) => {
     },
   ); // end of define method
   User.associate = () => {};
-  User.prototype.verifyPassword = (bodyPassword, basePassword) => {
-    let decrypted = decipher.update(basePassword, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
+  User.prototype.verifyPassword = (bodyPassword, dataBasePassword) => {
+    const decrypted = decrypt(dataBasePassword);
     return decrypted === bodyPassword;
   };
   return User;

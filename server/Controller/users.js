@@ -46,7 +46,7 @@ export default {
   },
   signIn(req, res) {
     if (req.body.username && req.body.password) {
-      userModel.findOne({ where: { username: req.body.username } })
+      return userModel.findOne({ where: { username: req.body.username } })
         .then((foundUser) => {
           if (!foundUser) {
             res.status(404).send({ message: 'Username or password does not exist' });
@@ -64,10 +64,11 @@ export default {
             });
           }
         })
-        .catch(error => res.status(400).send({ messages: error.message }));
-    } else {
-      res.status(400).send({ message: 'Incomplete login details' });
+        .catch((error) => {
+          res.status(400).send({ message: error.message });
+        });
     }
+    return res.status(400).send({ message: 'Incomplete login details' });
   },
   list(req, res) {
     return userModel.all({ attributes: ['username', 'email'] })
@@ -77,10 +78,21 @@ export default {
   applyPatch(req, res) {
     const { jsonObject, jsonPatchObject } = req.body;
     try {
-      const newJsonObject = jsonPatch.apply(JSON.parse(jsonObject), JSON.parse(jsonPatchObject));
-      res.status(201).send({ newJsonObject });
+      if (typeof (jsonObject) === 'object') {
+        const newJsonObject = jsonPatch.apply(jsonObject, jsonPatchObject);
+        res.status(201).send({ newJsonObject });
+      } else {
+        const newJsonObject = jsonPatch.apply(JSON.parse(jsonObject), JSON.parse(jsonPatchObject));
+        res.status(201).send({ newJsonObject });
+      }
     } catch (error) {
-      if (JSON.parse(jsonPatchObject)[0].op === 'test') {
+      if (typeof (jsonObject) === 'string') {
+        if (JSON.parse(jsonPatchObject)[0].op === 'test') {
+          res.status(400).send({ Message: error.message });
+        } else {
+          res.status(400).send({ 'Error type': error.name, Message: error.message });
+        }
+      } else if (jsonPatchObject[0].op === 'test') {
         res.status(400).send({ Message: error.message });
       } else {
         res.status(400).send({ 'Error type': error.name, Message: error.message });

@@ -19,7 +19,7 @@ module.exports = {
   existingEmail: {
     username: 'Jane Smith',
     password: 'janedoe',
-    email: 'johndoe@wemail.com',
+    email: 'janedoe@wemail.com',
   },
   signinWithNullUsername: {
     username: null,
@@ -46,4 +46,12 @@ module.exports = {
     username: 'John Doe',
     password: 'doejohn',
   },
+  /* eslint-disable quote-props,quotes,comma-dangle,key-spacing,object-curly-spacing */
+  jsonObject: {"car":"Honda"},
+  jsonPatchObject:
+    [{"op":"add", "path":"/phone", "value":"sony"}],
+  invalidJsonPatchObject:
+    [{ "ops": "add", "path": "/phone", "value": "sony" }],
+  failTestOperation:
+      [{ "op": "test", "path": "/car", "value": "Toyota" }],
 };
