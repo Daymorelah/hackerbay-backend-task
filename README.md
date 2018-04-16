@@ -1,6 +1,8 @@
 
 # Solution to the back-end task
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 A simple stateless microservices in Node.js that has functionalities that include: 
 - Authentication
 - JSON patching
@@ -71,3 +73,4 @@ To report an issue or give feedback, Click link
 * Ademola Hussain
 
 ## Licence 
+[MIT License](https://github.com/Daymorelah/hackerbay-backend-task/blob/master/LICENSE)
