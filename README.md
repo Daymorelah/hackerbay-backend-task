@@ -24,10 +24,16 @@ This microservice was implemented using:
  * [Express](https://expressjs.com/) Express is a minimal and flexible Node.js web application framework 
  * [Sequelize](http://docs.sequelizejs.com/) Sequelize is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL
  * [Postgres](https://www.postgresql.org/) A powerful, open source object-relational database system.
+ 
+ ### Testing
+ The microservice was tested using:
+ * [Mocha](https://mochajs.org/) Mocha is a feature-rich JavaScript test framework running on Node.js used for asynchronous testing
+ * [Chai](http://www.chaijs.com/) Chai is a BDD / TDD assertion library for node that can be paired with any javascript testing framework
+ * [Istanbul](https://istanbul.js.org/) Istanbul is a javascript test coverage tool.
 
 ### INSTALLATION
   * install [Node js](https://nodejs.org/en/) and [Postgress](https://www.postgresql.org/)
-  * Clone the repository `git clone https://github.com/Daymorelah/hackerbay-backend-task`
+  * Clone the repository `git clone https://github.com/Daymorelah/hackerbay-backend-task.git`
   * Navigate to the location in your terminal
   * Run `npm install` to install dependencies
   * Setup Postgres, create a database `backend-task` and set it to any port number [Setup postgress](http://certek.com/kb4/install-server-postgresql-and-pgadmin-on-windows/)
@@ -42,10 +48,10 @@ To run tests for the server side
 * Run `npm run test`
 
 ### Contributing
-1. Fork this [repository](https://github.com/Kenec/PostIt.git) 
-2. Clone to your local environment: `https://github.com/Kenec/PostIt.git`
+1. Fork this [repository](https://github.com/Daymorelah/hackerbay-backend-task.git) 
+2. Clone to your local environment: `https://github.com/Daymorelah/hackerbay-backend-task.git'
 3. Create your feature branch: `git checkout -b my-new-feature`
-4. Commit your changes: `git commit -am 'Add some feature'`
+4. Commit your changes: `git commit -m 'Add some feature'`
 5. Write test for the new features
 6. Push to the branch: `git push origin my-new-feature`
 7. Submit a pull request against the `staging` branch
@@ -59,7 +65,7 @@ To run tests for the server side
 
 ## ISSUES
 To report an issue or give feedback, Click link
-[Issues and Feedback](https://github.com/Kenec/PostIt/issues)
+[Issues and Feedback](https://github.com/Daymorelah/hackerbay-backend-task/issues)
 
 ## Authors
 * Ademola Hussain
