@@ -9,7 +9,7 @@
     "run_migrations": "set NODE_ENV=test&& sequelize db:migrate:undo:all && sequelize db:migrate",
     "run_seeders": "set NODE_ENV=test&& sequelize db:seed:undo:all && sequelize db:seed:all",
     "run_test": "set NODE_ENV=test&& mocha --require babel-register server/Tests/Controllers/usersTests.js --exit",
-    "test": "npm run run_migrations && npm run run_seeders && npm run run_test",
+    "test": "npm run run_migrations && npm run run_seeders && npm run run_test && npm run test_coverage",
     "start": "nodemon server/app.js --exec babel-node"
   },
   "keywords": [
